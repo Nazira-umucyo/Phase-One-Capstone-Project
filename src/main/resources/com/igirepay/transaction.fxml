@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.igirepay.TransactionController"
+            prefWidth="700" prefHeight="500"
+            style="-fx-background-color: #F5F7FA;">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20"
+              style="-fx-background-color: #2C3E50; -fx-padding: 15 25;">
+            <Button text="←" onAction="#handleBack"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 18; -fx-cursor: hand;"/>
+            <Text text="IgirePay" style="-fx-font-size: 22; -fx-font-weight: bold; -fx-fill: #F39C12;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Text text="Transaction Management" style="-fx-font-size: 13; -fx-fill: white;"/>
+        </HBox>
+    </top>
+    <left>
+        <VBox spacing="5" style="-fx-background-color: #34495E; -fx-padding: 20; -fx-pref-width: 200;">
+            <Label text="TRANSACTIONS" style="-fx-text-fill: #95A5A6; -fx-font-size: 11; -fx-padding: 0 0 10 5;"/>
+            <Button text="Deposit" maxWidth="180" onAction="#handleDeposit"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 13; -fx-padding: 10; -fx-background-radius: 6; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;"/>
+            <Button text="Withdraw" maxWidth="180" onAction="#handleWithdraw"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 13; -fx-padding: 10; -fx-background-radius: 6; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;"/>
+            <Button text="Transfer" maxWidth="180" onAction="#handleTransfer"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 13; -fx-padding: 10; -fx-background-radius: 6; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;"/>
+            <Button text="History" maxWidth="180" onAction="#handleHistory"
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 13; -fx-padding: 10; -fx-background-radius: 6; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;"/>
+        </VBox>
+    </left>
+    <center>
+        <GridPane style="-fx-background-color: #F5F7FA; -fx-padding: 30;">
+            <columnConstraints>
+                <ColumnConstraints hgrow="ALWAYS" fillWidth="true"/>
+            </columnConstraints>
+            <VBox spacing="15" GridPane.columnIndex="0" maxWidth="Infinity">
+                <VBox fx:id="depositSection" spacing="10"
+                      style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
+                    <Text text="Transaction Management" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #2C3E50;"/>
+                    <Label text="Select an option from the sidebar." style="-fx-font-size: 13; -fx-text-fill: #7F8C8D;"/>
+                </VBox>
+                <VBox fx:id="depositForm" spacing="10" visible="false" managed="false"
+                      style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
+                    <Text text="Deposit Money" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #2C3E50;"/>
+                    <TextField fx:id="depositAccountId" promptText="Account ID" style="-fx-padding: 10;"/>
+                    <TextField fx:id="depositAmount" promptText="Amount" style="-fx-padding: 10;"/>
+                    <Button text="Deposit" onAction="#handleConfirmDeposit" maxWidth="Infinity"
+                            style="-fx-background-color: #27AE60; -fx-text-fill: white; -fx-padding: 10; -fx-cursor: hand;"/>
+                </VBox>
+                <VBox fx:id="withdrawForm" spacing="10" visible="false" managed="false"
+                      style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
+                    <Text text="Withdraw Money" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #2C3E50;"/>
+                    <TextField fx:id="withdrawAccountId" promptText="Account ID" style="-fx-padding: 10;"/>
+                    <TextField fx:id="withdrawAmount" promptText="Amount" style="-fx-padding: 10;"/>
+                    <Button text="Withdraw" onAction="#handleConfirmWithdraw" maxWidth="Infinity"
+                            style="-fx-background-color: #E74C3C; -fx-text-fill: white; -fx-padding: 10; -fx-cursor: hand;"/>
+                </VBox>
+                <VBox fx:id="transferForm" spacing="10" visible="false" managed="false"
+                      style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
+                    <Text text="Transfer Money" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #2C3E50;"/>
+                    <TextField fx:id="fromAccountId" promptText="Your Account ID" style="-fx-padding: 10;"/>
+                    <TextField fx:id="toAccountId" promptText="Recipient Account ID" style="-fx-padding: 10;"/>
+                    <TextField fx:id="transferAmount" promptText="Amount" style="-fx-padding: 10;"/>
+                    <Button text="Transfer" onAction="#handleConfirmTransfer" maxWidth="Infinity"
+                            style="-fx-background-color: #2980B9; -fx-text-fill: white; -fx-padding: 10; -fx-cursor: hand;"/>
+                </VBox>
+                <VBox fx:id="historySection" spacing="10" visible="false" managed="false"
+                      style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
+                    <Text text="Transaction History" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #2C3E50;"/>
+                    <TextField fx:id="historyAccountId" promptText="Account ID" style="-fx-padding: 10;"/>
+                    <Button text="View History" onAction="#handleViewHistory" maxWidth="Infinity"
+                            style="-fx-background-color: #2980B9; -fx-text-fill: white; -fx-padding: 10; -fx-cursor: hand;"/>
+                    <Label fx:id="historyLabel" text="" style="-fx-font-size: 12;"/>
+                </VBox>
+                <Label fx:id="messageLabel" text="" style="-fx-text-fill: #E74C3C;"/>
+            </VBox>
+        </GridPane>
+    </center>
+    <bottom>
+        <HBox alignment="CENTER" style="-fx-padding: 10; -fx-background-color: #ECF0F1;">
+            <Label text="© 2026 IgirePay Technologies Ltd." style="-fx-text-fill: #95A5A6; -fx-font-size: 11;"/>
+        </HBox>
+    </bottom>
+</BorderPane>
