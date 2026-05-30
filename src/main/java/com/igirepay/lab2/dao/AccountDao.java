@@ -75,6 +75,28 @@ public class AccountDao {
             throw e;
         }
     }
+    public List<Account> getAllAccounts() throws SQLException {
+        try {
+            List<Account> accounts = new ArrayList<>();
+            String sql = "SELECT * FROM accounts";
+            Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                accounts.add(new Account(
+                        resultSet.getInt("id"),
+                        resultSet.getInt("customer_id"),
+                        resultSet.getString("account_type"),
+                        resultSet.getDouble("balance"),
+                        resultSet.getString("created_at")
+                ));
+            }
+            return accounts;
+        } catch (SQLException e) {
+            System.out.println("Error getting all accounts: " + e.getMessage());
+            throw e;
+        }
+    }
     public void updateBalance(int accountId, double newBalance) throws SQLException {
         try {
             String sql = "UPDATE accounts SET balance = ? WHERE id = ?";

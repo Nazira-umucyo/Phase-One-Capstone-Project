@@ -41,7 +41,8 @@ public class CustomerDao {
                         resultSet.getString("full_name"),
                         resultSet.getString("email"),
                         resultSet.getString("phone_number"),
-                        resultSet.getString("pin")
+                        resultSet.getString("pin"),
+                        resultSet.getString("role")
                 );
             }
             return null;
@@ -63,7 +64,8 @@ public class CustomerDao {
                         resultSet.getString("full_name"),
                         resultSet.getString("email"),
                         resultSet.getString("phone_number"),
-                        resultSet.getString("pin")
+                        resultSet.getString("pin"),
+                        resultSet.getString("role")
                 ));
             }
             return customers;
@@ -85,6 +87,20 @@ public class CustomerDao {
             System.out.println("Customer updated successfully: " + customer.getFullName());
         } catch (SQLException e) {
             System.out.println("Error updating customer: " + e.getMessage());
+            throw e;
+        }
+    }
+    public void updatePin(int customerId, String newPin) throws SQLException {
+        try {
+            String sql = "UPDATE customers SET pin = ? WHERE id = ?";
+            Connection connection = DatabaseConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, newPin);
+            preparedStatement.setInt(2, customerId);
+            preparedStatement.executeUpdate();
+            System.out.println("PIN updated successfully!");
+        } catch (SQLException e) {
+            System.out.println("Error updating PIN: " + e.getMessage());
             throw e;
         }
     }
