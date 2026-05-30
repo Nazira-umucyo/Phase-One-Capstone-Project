@@ -1,90 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.igirepay.AccountController"
+            fx:controller="com.igirepay.lab3.controller.AccountController"
             prefWidth="700" prefHeight="500"
             style="-fx-background-color: #F5F7FA;">
     <top>
         <HBox alignment="CENTER_LEFT" spacing="20"
               style="-fx-background-color: #2C3E50; -fx-padding: 15 25;">
             <Button text="←" onAction="#handleBack"
-                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 18; -fx-cursor: hand; -fx-padding: 0 10 0 0;"/>
+                    style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 18; -fx-cursor: hand;"/>
             <Text text="IgirePay" style="-fx-font-size: 22; -fx-font-weight: bold; -fx-fill: #F39C12;"/>
             <Region HBox.hgrow="ALWAYS"/>
-            <Text text="Account Management"
-                  style="-fx-font-size: 13; -fx-fill: white;"/>
+            <Text text="Account Management" style="-fx-font-size: 13; -fx-fill: white;"/>
         </HBox>
     </top>
-
-    <!-- Sidebar -->
     <left>
         <VBox spacing="5" style="-fx-background-color: #34495E; -fx-padding: 20; -fx-min-width: 200;">
-            <Label text="ACCOUNT MENU"
-                   style="-fx-text-fill: #95A5A6; -fx-font-size: 11; -fx-padding: 0 0 10 5;"/>
-            <Button text="  💳  Create Wallet" maxWidth="180"
-                    onAction="#handleCreateWallet"
+            <Label text="ACCOUNT MENU" style="-fx-text-fill: #95A5A6; -fx-font-size: 11; -fx-padding: 0 0 10 5;"/>
+            <Button text="Create Account" maxWidth="180" onAction="#handleCreateAccount"
                     style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 13; -fx-padding: 10; -fx-background-radius: 6; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;"/>
-            <Button text="  🏦  Create Savings" maxWidth="180"
-                    onAction="#handleCreateSavings"
+            <Button text="View Balance" maxWidth="180" onAction="#handleViewBalance"
                     style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 13; -fx-padding: 10; -fx-background-radius: 6; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;"/>
-            <Button text="  💰  View Balance" maxWidth="180"
-                    onAction="#handleViewBalance"
+            <Button text="My Accounts" maxWidth="180" onAction="#handleMyAccounts"
                     style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 13; -fx-padding: 10; -fx-background-radius: 6; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;"/>
-            <Button text="  🗑️  Delete Account" maxWidth="180"
-                    onAction="#handleDeleteAccount"
+            <Button text="Delete Account" maxWidth="180" onAction="#handleDeleteAccount"
                     style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 13; -fx-padding: 10; -fx-background-radius: 6; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;"/>
-            </VBox>
+        </VBox>
     </left>
-
     <center>
         <VBox alignment="TOP_CENTER" spacing="15"
               style="-fx-padding: 30; -fx-background-color: #F5F7FA;">
-
-            <!-- Create Account Section -->
             <VBox fx:id="createSection" spacing="10"
                   style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
-                <Text fx:id="createTitle" text="Create Account"
+                <Text fx:id="createTitle" text="Account Management"
                       style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #2C3E50;"/>
-                <Label fx:id="createMessage" text="Select Wallet or Savings from the sidebar."
+                <Label fx:id="createMessage" text="Select an option from the sidebar."
                        style="-fx-font-size: 13; -fx-text-fill: #7F8C8D;"/>
             </VBox>
-
+            <VBox fx:id="createFormSection" spacing="10" visible="false" managed="false"
+                  style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
+                <Text text="Create Account" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #2C3E50;"/>
+                <Label text="Enter your phone number to verify your identity." style="-fx-font-size: 13; -fx-text-fill: #7F8C8D;"/>
+                <TextField fx:id="phoneNumberField" promptText="Enter your phone number" maxWidth="Infinity"
+                           style="-fx-padding: 10; -fx-background-radius: 6;"/>
+                <ComboBox fx:id="accountTypeComboBox" maxWidth="Infinity"
+                          style="-fx-padding: 10; -fx-background-radius: 6;"/>
+                <Button text="Create Account" onAction="#handleConfirmCreate" maxWidth="Infinity"
+                        style="-fx-background-color: #27AE60; -fx-text-fill: white; -fx-padding: 10; -fx-background-radius: 6; -fx-cursor: hand;"/>
+            </VBox>
             <VBox fx:id="balanceSection" spacing="10" visible="false" managed="false"
                   style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
-                <Text text="View Balance"
-                      style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #2C3E50;"/>
-                <TextField fx:id="accountIdField" promptText="Enter Account ID"
+                <Text text="View Balance" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #2C3E50;"/>
+                <TextField fx:id="accountIdField" promptText="Enter Account ID" maxWidth="Infinity"
                            style="-fx-padding: 10; -fx-background-radius: 6;"/>
-                <Button text="Check Balance" onAction="#handleCheckBalance"
+                <Button text="Check Balance" onAction="#handleCheckBalance" maxWidth="Infinity"
                         style="-fx-background-color: #2980B9; -fx-text-fill: white; -fx-padding: 10; -fx-background-radius: 6; -fx-cursor: hand;"/>
-                <Label fx:id="balanceLabel" text="" style="-fx-font-size: 13;"/>
+                <Label fx:id="balanceLabel" text="" style="-fx-font-size: 13;" wrapText="true"/>
             </VBox>
-
+            <VBox fx:id="myAccountsSection" spacing="10" visible="false" managed="false"
+                  style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
+                <Text text="My Accounts" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #2C3E50;"/>
+                <HBox style="-fx-background-color: #2C3E50; -fx-padding: 10; -fx-background-radius: 6;">
+                    <Label text="ID" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 50;"/>
+                    <Label text="Type" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 150;"/>
+                    <Label text="Balance (RWF)" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 150;"/>
+                    <Label text="Created At" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 200;"/>
+                </HBox>
+                <VBox fx:id="accountsTableRows" spacing="2"/>
+            </VBox>
             <VBox fx:id="deleteSection" spacing="10" visible="false" managed="false"
                   style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
-                <Text text="Delete Account"
-                      style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #2C3E50;"/>
-                <TextField fx:id="deleteAccountIdField" promptText="Enter Account ID"
+                <Text text="Delete Account" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #2C3E50;"/>
+                <Label text="Note: Account must have zero balance to be deleted." style="-fx-font-size: 12; -fx-text-fill: #E74C3C;"/>
+                <TextField fx:id="deleteAccountIdField" promptText="Enter Account ID" maxWidth="Infinity"
                            style="-fx-padding: 10; -fx-background-radius: 6;"/>
-                <Button text="Delete Account" onAction="#handleConfirmDelete"
+                <Button text="Delete Account" onAction="#handleConfirmDelete" maxWidth="Infinity"
                         style="-fx-background-color: #E74C3C; -fx-text-fill: white; -fx-padding: 10; -fx-background-radius: 6; -fx-cursor: hand;"/>
             </VBox>
-
-            <Label fx:id="messageLabel" text="" style="-fx-text-fill: #E74C3C;"/>
-
+            <Label fx:id="messageLabel" text="" style="-fx-text-fill: #E74C3C;" wrapText="true"/>
         </VBox>
     </center>
-
     <bottom>
-        <HBox alignment="CENTER"
-              style="-fx-padding: 10; -fx-background-color: #ECF0F1;">
-            <Label text="© 2026 IgirePay Technologies Ltd."
-                   style="-fx-text-fill: #95A5A6; -fx-font-size: 11;"/>
+        <HBox alignment="CENTER" style="-fx-padding: 10; -fx-background-color: #ECF0F1;">
+            <Label text="© 2026 IgirePay Technologies Ltd." style="-fx-text-fill: #95A5A6; -fx-font-size: 11;"/>
         </HBox>
     </bottom>
-
 </BorderPane>

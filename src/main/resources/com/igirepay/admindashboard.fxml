@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.igirepay.lab3.controller.AdminDashboardController"
+            prefWidth="1000" prefHeight="650"
+            style="-fx-background-color: #F0F2F5;">
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20"
+              style="-fx-background-color: #1A1A2E; -fx-padding: 15 25;">
+            <Text text="IgirePay" style="-fx-font-size: 22; -fx-font-weight: bold; -fx-fill: #F39C12;"/>
+            <Label text="ADMIN PANEL" style="-fx-text-fill: #95A5A6; -fx-font-size: 11; -fx-padding: 3 8; -fx-background-color: #2C3E50; -fx-background-radius: 4;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Text fx:id="adminNameText" text="" style="-fx-font-size: 13; -fx-fill: white;"/>
+            <Button text="Logout" onAction="#handleLogout"
+                    style="-fx-background-color: #F39C12; -fx-text-fill: white; -fx-font-size: 12; -fx-padding: 6 15; -fx-background-radius: 4; -fx-cursor: hand; -fx-font-weight: bold;"/>
+        </HBox>
+    </top>
+    <left>
+        <VBox spacing="3" style="-fx-background-color: #1A1A2E; -fx-padding: 20; -fx-min-width: 210;">
+            <Button text="  Dashboard" maxWidth="190" onAction="#handleDashboard"
+                    style="-fx-background-color: #F39C12; -fx-text-fill: white; -fx-font-size: 13; -fx-padding: 12; -fx-background-radius: 6; -fx-cursor: hand; -fx-alignment: CENTER_LEFT; -fx-font-weight: bold;"/>
+            <Button text="  All Customers" maxWidth="190" onAction="#handleAllCustomers"
+                    style="-fx-background-color: transparent; -fx-text-fill: #BDC3C7; -fx-font-size: 13; -fx-padding: 10; -fx-background-radius: 6; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;"/>
+            <Button text="  Customer Accounts" maxWidth="190" onAction="#handleCustomerAccounts"
+                    style="-fx-background-color: transparent; -fx-text-fill: #BDC3C7; -fx-font-size: 13; -fx-padding: 10; -fx-background-radius: 6; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;"/>
+            <Button text="  All Transactions" maxWidth="190" onAction="#handleAllTransactions"
+                    style="-fx-background-color: transparent; -fx-text-fill: #BDC3C7; -fx-font-size: 13; -fx-padding: 10; -fx-background-radius: 6; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;"/>
+            <Button text="  Transaction Statement" maxWidth="190" onAction="#handleTransactionStatement"
+                    style="-fx-background-color: transparent; -fx-text-fill: #BDC3C7; -fx-font-size: 13; -fx-padding: 10; -fx-background-radius: 6; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;"/>
+            <Button text="  Delete Account" maxWidth="190" onAction="#handleDeleteAccount"
+                    style="-fx-background-color: transparent; -fx-text-fill: #BDC3C7; -fx-font-size: 13; -fx-padding: 10; -fx-background-radius: 6; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;"/>
+        </VBox>
+    </left>
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: #F0F2F5; -fx-background: #F0F2F5;">
+            <VBox alignment="TOP_LEFT" spacing="20" style="-fx-padding: 25; -fx-background-color: #F0F2F5;">
+                <VBox fx:id="defaultSection" spacing="20">
+                    <HBox spacing="15">
+                        <VBox alignment="CENTER" spacing="5" prefWidth="200" prefHeight="90"
+                              style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
+                            <Text fx:id="totalCustomersText" text="0" style="-fx-font-size: 28; -fx-font-weight: bold; -fx-fill: #2980B9;"/>
+                            <Label text="Total Customers" style="-fx-text-fill: #7F8C8D; -fx-font-size: 12;"/>
+                        </VBox>
+                        <VBox alignment="CENTER" spacing="5" prefWidth="200" prefHeight="90"
+                              style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
+                            <Text fx:id="totalAccountsText" text="0" style="-fx-font-size: 28; -fx-font-weight: bold; -fx-fill: #27AE60;"/>
+                            <Label text="Total Accounts" style="-fx-text-fill: #7F8C8D; -fx-font-size: 12;"/>
+                        </VBox>
+                        <VBox alignment="CENTER" spacing="5" prefWidth="200" prefHeight="90"
+                              style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
+                            <Text fx:id="totalTransactionsText" text="0" style="-fx-font-size: 28; -fx-font-weight: bold; -fx-fill: #E74C3C;"/>
+                            <Label text="Total Transactions" style="-fx-text-fill: #7F8C8D; -fx-font-size: 12;"/>
+                        </VBox>
+                    </HBox>
+                </VBox>
+                <VBox fx:id="customersSection" spacing="10" visible="false" managed="false"
+                      style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
+                    <Text text="All Customers" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #2C3E50;"/>
+                    <HBox spacing="10">
+                        <TextField fx:id="customerSearchField" promptText="Search by name or phone..."
+                                   style="-fx-padding: 10;" HBox.hgrow="ALWAYS"/>
+                        <Button text="Search" onAction="#handleSearchCustomers"
+                                style="-fx-background-color: #2980B9; -fx-text-fill: white; -fx-padding: 10 20; -fx-cursor: hand;"/>
+                        <Button text="Show All" onAction="#handleShowAllCustomers"
+                                style="-fx-background-color: #7F8C8D; -fx-text-fill: white; -fx-padding: 10 20; -fx-cursor: hand;"/>
+                    </HBox>
+                    <HBox style="-fx-background-color: #2C3E50; -fx-padding: 10; -fx-background-radius: 6;">
+                        <Label text="ID" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 50;"/>
+                        <Label text="Name" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 180;"/>
+                        <Label text="Email" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 220;"/>
+                        <Label text="Phone" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 150;"/>
+                        <Label text="Role" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 80;"/>
+                    </HBox>
+                    <VBox fx:id="customersTableRows" spacing="2"/>
+                </VBox>
+                <VBox fx:id="customerAccountsSection" spacing="10" visible="false" managed="false"
+                      style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
+                    <Text text="Customer Accounts" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #2C3E50;"/>
+                    <HBox spacing="10">
+                        <TextField fx:id="customerIdField" promptText="Enter Customer ID"
+                                   style="-fx-padding: 10;" HBox.hgrow="ALWAYS"/>
+                        <Button text="View" onAction="#handleViewCustomerAccounts"
+                                style="-fx-background-color: #2980B9; -fx-text-fill: white; -fx-padding: 10 20; -fx-cursor: hand;"/>
+                    </HBox>
+                    <HBox style="-fx-background-color: #2C3E50; -fx-padding: 10; -fx-background-radius: 6;">
+                        <Label text="ID" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 50;"/>
+                        <Label text="Type" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 150;"/>
+                        <Label text="Balance (RWF)" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 200;"/>
+                        <Label text="Created At" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 250;"/>
+                    </HBox>
+                    <VBox fx:id="customerAccountsTableRows" spacing="2"/>
+                </VBox>
+                <VBox fx:id="transactionsSection" spacing="10" visible="false" managed="false"
+                      style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
+                    <Text text="All Transactions" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #2C3E50;"/>
+                    <HBox spacing="10">
+                        <TextField fx:id="transactionSearchField" promptText="Search by customer name..."
+                                   style="-fx-padding: 10;" HBox.hgrow="ALWAYS"/>
+                        <Button text="Search" onAction="#handleSearchTransactions"
+                                style="-fx-background-color: #2980B9; -fx-text-fill: white; -fx-padding: 10 20; -fx-cursor: hand;"/>
+                        <Button text="Show All" onAction="#handleShowAllTransactions"
+                                style="-fx-background-color: #7F8C8D; -fx-text-fill: white; -fx-padding: 10 20; -fx-cursor: hand;"/>
+                    </HBox>
+                    <HBox style="-fx-background-color: #2C3E50; -fx-padding: 10; -fx-background-radius: 6;">
+                        <Label text="ID" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 40;"/>
+                        <Label text="Customer" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 150;"/>
+                        <Label text="Acc ID" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 60;"/>
+                        <Label text="Type" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 100;"/>
+                        <Label text="Amount (RWF)" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 120;"/>
+                        <Label text="Reference ID" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 200;"/>
+                        <Label text="Date" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 180;"/>
+                    </HBox>
+                    <VBox fx:id="transactionsTableRows" spacing="2"/>
+                </VBox>
+                <VBox fx:id="statementSection" spacing="10" visible="false" managed="false"
+                      style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
+                    <Text text="Transaction Statement" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #2C3E50;"/>
+                    <Label text="Export all transactions for a specific customer to CSV." style="-fx-font-size: 13; -fx-text-fill: #7F8C8D;"/>
+                    <HBox spacing="10">
+                        <TextField fx:id="statementCustomerIdField" promptText="Enter Customer ID"
+                                   style="-fx-padding: 10;" HBox.hgrow="ALWAYS"/>
+                        <TextField fx:id="statementFileName" promptText="File name (e.g. statement.csv)"
+                                   style="-fx-padding: 10;" HBox.hgrow="ALWAYS"/>
+                        <Button text="Export" onAction="#handleExportStatement"
+                                style="-fx-background-color: #27AE60; -fx-text-fill: white; -fx-padding: 10 20; -fx-cursor: hand;"/>
+                    </HBox>
+                </VBox>
+                <VBox fx:id="deleteAccountSection" spacing="10" visible="false" managed="false"
+                      style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
+                    <Text text="Delete Account" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #2C3E50;"/>
+                    <Label text="Note: Account must have zero balance to be deleted."
+                           style="-fx-font-size: 12; -fx-text-fill: #E74C3C;"/>
+                    <HBox spacing="10">
+                        <TextField fx:id="deleteAccountIdField" promptText="Enter Account ID"
+                                   style="-fx-padding: 10;" HBox.hgrow="ALWAYS"/>
+                        <Button text="Delete" onAction="#handleConfirmDelete"
+                                style="-fx-background-color: #E74C3C; -fx-text-fill: white; -fx-padding: 10 20; -fx-cursor: hand;"/>
+                    </HBox>
+                </VBox>
+                <Label fx:id="messageLabel" text="" style="-fx-text-fill: #E74C3C;" wrapText="true"/>
+            </VBox>
+        </ScrollPane>
+    </center>
+    <bottom>
+        <HBox alignment="CENTER" style="-fx-padding: 10; -fx-background-color: #1A1A2E;">
+            <Label text="© 2026 IgirePay Technologies Ltd. — Admin Panel"
+                   style="-fx-text-fill: #95A5A6; -fx-font-size: 11;"/>
+        </HBox>
+    </bottom>
+</BorderPane>

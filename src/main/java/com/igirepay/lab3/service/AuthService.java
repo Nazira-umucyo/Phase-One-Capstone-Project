@@ -33,7 +33,7 @@ public class AuthService {
         try {
             if (customer.getPin().equals(oldPin)) {
                 customer.setPin(newPin);
-                customerDao.updateCustomer(customer);
+                customerDao.updatePin(customer.getId(), newPin);
                 System.out.println("PIN changed successfully!");
                 return true;
             } else {

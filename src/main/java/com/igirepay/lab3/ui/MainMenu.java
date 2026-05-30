@@ -3,6 +3,7 @@ package com.igirepay.lab3.ui;
 import com.igirepay.lab1.model.Customer;
 import com.igirepay.lab3.service.AuthService;
 
+import javax.management.relation.Role;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -67,7 +68,7 @@ public class MainMenu {
         System.out.print("Create PIN: ");
         String pin = scanner.nextLine();
         try {
-            Customer customer = new Customer(0, fullName, email, phoneNumber, pin);
+            Customer customer = new Customer(0, fullName, email, phoneNumber, pin, "USER");
             authService.registerCustomer(customer);
             System.out.println("Registration successful! Please login.");
             performLogin();

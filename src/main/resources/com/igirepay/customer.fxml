@@ -5,7 +5,7 @@
 <?import javafx.scene.text.*?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.igirepay.CustomerController"
+            fx:controller="com.igirepay.lab3.controller.CustomerController"
             prefWidth="700" prefHeight="500"
             style="-fx-background-color: #F5F7FA;">
 

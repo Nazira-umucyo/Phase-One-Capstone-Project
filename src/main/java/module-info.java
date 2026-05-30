@@ -6,7 +6,10 @@ module com.ogire.igirepay {
     requires com.dlsc.formsfx;
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
+    requires java.management;
 
     opens com.igirepay to javafx.fxml;
     exports com.igirepay;
+    exports com.igirepay.lab3.controller;
+    opens com.igirepay.lab3.controller to javafx.fxml;
 }

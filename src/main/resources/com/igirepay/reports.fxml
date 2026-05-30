@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
 <BorderPane xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.igirepay.ReportsController"
+            fx:controller="com.igirepay.lab3.controller.ReportsController"
             prefWidth="700" prefHeight="500"
             style="-fx-background-color: #F5F7FA;">
-
     <top>
         <HBox alignment="CENTER_LEFT" spacing="20"
               style="-fx-background-color: #2C3E50; -fx-padding: 15 25;">
@@ -19,62 +16,62 @@
             <Text text="Reports" style="-fx-font-size: 13; -fx-fill: white;"/>
         </HBox>
     </top>
-
     <left>
         <VBox spacing="5" style="-fx-background-color: #34495E; -fx-padding: 20; -fx-min-width: 200;">
-            <Label text="REPORTS MENU"
-                   style="-fx-text-fill: #95A5A6; -fx-font-size: 11; -fx-padding: 0 0 10 5;"/>
-            <Button text="  📊  Daily Summary" maxWidth="180"
-                    onAction="#handleDailySummary"
+            <Label text="REPORTS MENU" style="-fx-text-fill: #95A5A6; -fx-font-size: 11; -fx-padding: 0 0 10 5;"/>
+            <Button text="Daily Summary" maxWidth="180" onAction="#handleDailySummary"
                     style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 13; -fx-padding: 10; -fx-background-radius: 6; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;"/>
-            <Button text="  📁  Export to CSV" maxWidth="180"
-                    onAction="#handleExportCSV"
+            <Button text="Export to CSV" maxWidth="180" onAction="#handleExportCSV"
                     style="-fx-background-color: transparent; -fx-text-fill: white; -fx-font-size: 13; -fx-padding: 10; -fx-background-radius: 6; -fx-cursor: hand; -fx-alignment: CENTER_LEFT;"/>
-            <Region VBox.vgrow="ALWAYS"/>
-              </VBox>
+        </VBox>
     </left>
-
     <center>
         <VBox alignment="TOP_CENTER" spacing="15"
               style="-fx-padding: 30; -fx-background-color: #F5F7FA;">
-
             <VBox fx:id="defaultSection" spacing="10"
                   style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
                 <Text text="Reports" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #2C3E50;"/>
-                <Label text="Select an option from the sidebar."
-                       style="-fx-font-size: 13; -fx-text-fill: #7F8C8D;"/>
+                <Label text="Select an option from the sidebar." style="-fx-font-size: 13; -fx-text-fill: #7F8C8D;"/>
             </VBox>
-
             <VBox fx:id="summarySection" spacing="10" visible="false" managed="false"
                   style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
-                <Text text="Daily Summary"
+                <Text text="Daily Transaction Summary"
                       style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #2C3E50;"/>
-                <Label fx:id="summaryLabel" text="" style="-fx-font-size: 13;"/>
+                <HBox style="-fx-background-color: #2C3E50; -fx-padding: 10; -fx-background-radius: 6;">
+                    <Label text="Transaction Type" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 200;"/>
+                    <Label text="Total Amount (RWF)" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-pref-width: 200;"/>
+                </HBox>
+                <HBox style="-fx-background-color: #EBF5FB; -fx-padding: 10; -fx-background-radius: 4;">
+                    <Label text="Deposits" style="-fx-text-fill: #2C3E50; -fx-pref-width: 200;"/>
+                    <Label fx:id="depositsLabel" text="0.0" style="-fx-text-fill: #27AE60; -fx-font-weight: bold; -fx-pref-width: 200;"/>
+                </HBox>
+                <HBox style="-fx-background-color: #FDEDEC; -fx-padding: 10; -fx-background-radius: 4;">
+                    <Label text="Withdrawals" style="-fx-text-fill: #2C3E50; -fx-pref-width: 200;"/>
+                    <Label fx:id="withdrawalsLabel" text="0.0" style="-fx-text-fill: #E74C3C; -fx-font-weight: bold; -fx-pref-width: 200;"/>
+                </HBox>
+                <HBox style="-fx-background-color: #EAF2FF; -fx-padding: 10; -fx-background-radius: 4;">
+                    <Label text="Transfers" style="-fx-text-fill: #2C3E50; -fx-pref-width: 200;"/>
+                    <Label fx:id="transfersLabel" text="0.0" style="-fx-text-fill: #2980B9; -fx-font-weight: bold; -fx-pref-width: 200;"/>
+                </HBox>
+                <HBox style="-fx-background-color: #F9F9F9; -fx-padding: 10; -fx-background-radius: 4;">
+                    <Label text="Total" style="-fx-text-fill: #2C3E50; -fx-font-weight: bold; -fx-pref-width: 200;"/>
+                    <Label fx:id="totalLabel" text="0.0" style="-fx-text-fill: #2C3E50; -fx-font-weight: bold; -fx-pref-width: 200;"/>
+                </HBox>
             </VBox>
-
             <VBox fx:id="exportSection" spacing="10" visible="false" managed="false"
                   style="-fx-background-color: white; -fx-padding: 20; -fx-background-radius: 8;">
-                <Text text="Export to CSV"
-                      style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #2C3E50;"/>
-                <TextField fx:id="exportAccountId" promptText="Account ID"
-                           style="-fx-padding: 10; -fx-background-radius: 6;"/>
-                <TextField fx:id="exportFileName" promptText="File name (e.g. transactions.csv)"
-                           style="-fx-padding: 10; -fx-background-radius: 6;"/>
-                <Button text="Export" onAction="#handleConfirmExport"
+                <Text text="Export to CSV" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-fill: #2C3E50;"/>
+                <TextField fx:id="exportAccountId" promptText="Account ID" style="-fx-padding: 10; -fx-background-radius: 6;"/>
+                <TextField fx:id="exportFileName" promptText="File name (e.g. transactions.csv)" style="-fx-padding: 10; -fx-background-radius: 6;"/>
+                <Button text="Export" onAction="#handleConfirmExport" maxWidth="Infinity"
                         style="-fx-background-color: #2980B9; -fx-text-fill: white; -fx-padding: 10; -fx-background-radius: 6; -fx-cursor: hand;"/>
             </VBox>
-
-            <Label fx:id="messageLabel" text="" style="-fx-text-fill: #E74C3C;"/>
-
+            <Label fx:id="messageLabel" text="" style="-fx-text-fill: #E74C3C;" wrapText="true"/>
         </VBox>
     </center>
-
     <bottom>
-        <HBox alignment="CENTER"
-              style="-fx-padding: 10; -fx-background-color: #ECF0F1;">
-            <Label text="© 2026 IgirePay Technologies Ltd."
-                   style="-fx-text-fill: #95A5A6; -fx-font-size: 11;"/>
+        <HBox alignment="CENTER" style="-fx-padding: 10; -fx-background-color: #ECF0F1;">
+            <Label text="© 2026 IgirePay Technologies Ltd." style="-fx-text-fill: #95A5A6; -fx-font-size: 11;"/>
         </HBox>
     </bottom>
-
 </BorderPane>

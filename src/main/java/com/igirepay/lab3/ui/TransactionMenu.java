@@ -21,7 +21,7 @@ public class TransactionMenu {
         this.transactionDAO = new TransactionDao();
     }
     public void show() {
-        System.out.println("\n===== Transaction Management =====");
+        System.out.println("\n Transaction Management");
         System.out.println("1. Deposit Money");
         System.out.println("2. Withdraw Money");
         System.out.println("3. Transfer Money");
@@ -55,7 +55,7 @@ public class TransactionMenu {
         System.out.print("Enter amount: ");
         double amount = Double.parseDouble(scanner.nextLine());
         try {
-            transactionService.deposit(accountId, amount);
+            transactionService.deposit(accountId, amount, loggedInCustomer.getId());
         } catch (SQLException e) {
             System.out.println("Error during deposit: " + e.getMessage());
         }
@@ -67,7 +67,7 @@ public class TransactionMenu {
         System.out.print("Enter amount: ");
         double amount = Double.parseDouble(scanner.nextLine());
         try {
-            transactionService.withdraw(accountId, amount);
+            transactionService.withdraw(accountId, amount, loggedInCustomer.getId());
         } catch (SQLException e) {
             System.out.println("Error during withdrawal: " + e.getMessage());
         }
@@ -81,12 +81,11 @@ public class TransactionMenu {
         System.out.print("Enter amount: ");
         double amount = Double.parseDouble(scanner.nextLine());
         try {
-            transactionService.transfer(fromAccountId, toAccountId, amount);
+            transactionService.transfer(fromAccountId, toAccountId, amount, loggedInCustomer.getId());
         } catch (SQLException e) {
             System.out.println("Error during transfer: " + e.getMessage());
         }
     }
-
     public void viewHistory() {
         System.out.print("Enter account ID: ");
         int accountId = Integer.parseInt(scanner.nextLine());
@@ -96,14 +95,13 @@ public class TransactionMenu {
                 System.out.println("No transactions found!");
                 return;
             }
-            System.out.println("\n===== Transaction History =====");
+            System.out.println("\nTransaction History");
             for (Transaction transaction : transactions) {
                 System.out.println("ID: " + transaction.getId());
                 System.out.println("Reference: " + transaction.getReferenceId());
                 System.out.println("Type: " + transaction.getTransactionType());
                 System.out.println("Amount: " + transaction.getAmount() + " RWF");
                 System.out.println("Date: " + transaction.getCreatedAt());
-                System.out.println("-----------------------------");
             }
         } catch (SQLException e) {
             System.out.println("Error viewing history: " + e.getMessage());

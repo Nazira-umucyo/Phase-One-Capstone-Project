@@ -1,5 +1,6 @@
 package com.igirepay.lab3.service;
 
+import com.igirepay.lab1.model.Account;
 import com.igirepay.lab1.model.Transaction;
 import com.igirepay.lab2.dao.AccountDao;
 import com.igirepay.lab2.dao.TransactionDao;
@@ -19,112 +20,115 @@ public class TransactionService {
         this.accountDao = new AccountDao();
         this.processedRequestDao = new ProcessedRequestDao();
     }
+
     private String generateReferenceId() {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         return "IGP-" + now.format(formatter);
     }
-    public void deposit(int accountId, double amount) throws SQLException {
+
+    public String deposit(int accountId, double amount, int customerId) throws SQLException {
         try {
             if (amount <= 0) {
-                System.out.println("Deposit amount must be greater than zero.");
-                return;
+                return "Deposit amount must be greater than zero!";
             }
             String referenceId = generateReferenceId();
             if (processedRequestDao.isRequestProcessed(referenceId)) {
-                System.out.println("Duplicate transaction detected: " + referenceId);
-                return;
+                return "Duplicate transaction detected!";
             }
-            com.igirepay.lab1.model.Account account = accountDao.getAccountById(accountId);
+            Account account = accountDao.getAccountById(accountId);
             if (account == null) {
-                System.out.println("Account not found!");
-                return;
+                return "Account not found!";
+            }
+            if (account.getCustomerId() != customerId) {
+                return "You can only deposit to your own account!";
             }
             double newBalance = account.getBalance() + amount;
             accountDao.updateBalance(accountId, newBalance);
             Transaction transaction = new Transaction(0, referenceId, amount, "DEPOSIT", accountId, LocalDateTime.now().toString());
             transactionDao.addTransaction(transaction);
             processedRequestDao.addProcessedRequest(referenceId);
-            System.out.println("Deposit successful! New balance: " + newBalance);
+            return "";
         } catch (SQLException e) {
-            System.out.println("Error during deposit: " + e.getMessage());
             throw e;
         }
     }
-    public void withdraw(int accountId, double amount) throws SQLException {
+
+    public String withdraw(int accountId, double amount, int customerId) throws SQLException {
         try {
             if (amount <= 0) {
-                System.out.println("Withdrawal amount must be greater than zero.");
-                return;
+                return "Withdrawal amount must be greater than zero!";
             }
             String referenceId = generateReferenceId();
             if (processedRequestDao.isRequestProcessed(referenceId)) {
-                System.out.println("Duplicate transaction detected: " + referenceId);
-                return;
+                return "Duplicate transaction detected!";
             }
-            com.igirepay.lab1.model.Account account = accountDao.getAccountById(accountId);
+            Account account = accountDao.getAccountById(accountId);
             if (account == null) {
-                System.out.println("Account not found!");
-                return;
+                return "Account not found!";
+            }
+            if (account.getCustomerId() != customerId) {
+                return "You can only withdraw from your own account!";
             }
             if (amount > account.getBalance()) {
-                System.out.println("Insufficient balance!");
-                return;
+                return "Insufficient balance!";
             }
             if (account.getAccountType().equals("SAVINGS")) {
                 if (amount < 100) {
-                    System.out.println("Minimum withdrawal for savings account is 100 RWF!");
-                    return;
+                    return "Minimum withdrawal for savings account is 100 RWF!";
                 }
                 double fee = amount * 2 / 100;
                 double totalDeduction = amount + fee;
                 if (totalDeduction > account.getBalance()) {
-                    System.out.println("Insufficient balance to cover amount and fee!");
-                    return;
+                    return "Insufficient balance to cover amount and fee!";
                 }
                 double newBalance = account.getBalance() - totalDeduction;
                 accountDao.updateBalance(accountId, newBalance);
                 Transaction transaction = new Transaction(0, referenceId, amount, "WITHDRAW", accountId, LocalDateTime.now().toString());
                 transactionDao.addTransaction(transaction);
                 processedRequestDao.addProcessedRequest(referenceId);
-                System.out.println("Fee charged: " + fee + " RWF");
-                System.out.println("Withdrawal successful! New balance: " + newBalance);
+                return "SUCCESS:Withdrawn successfully! Fee charged: " + fee + " RWF. New balance: " + newBalance + " RWF";
             } else {
                 double newBalance = account.getBalance() - amount;
                 accountDao.updateBalance(accountId, newBalance);
                 Transaction transaction = new Transaction(0, referenceId, amount, "WITHDRAW", accountId, LocalDateTime.now().toString());
                 transactionDao.addTransaction(transaction);
                 processedRequestDao.addProcessedRequest(referenceId);
-                System.out.println("Withdrawal successful! New balance: " + newBalance);
+                return "";
             }
         } catch (SQLException e) {
-            System.out.println("Error during withdrawal: " + e.getMessage());
             throw e;
         }
     }
-    public void transfer(int fromAccountId, int toAccountId, double amount) throws SQLException {
+
+    public String transfer(int fromAccountId, int toAccountId, double amount, int customerId) throws SQLException {
         try {
             if (amount <= 0) {
-                System.out.println("Transfer amount must be greater than zero.");
-                return;
+                return "Transfer amount must be greater than zero!";
             }
             String referenceId = generateReferenceId();
             if (processedRequestDao.isRequestProcessed(referenceId)) {
-                System.out.println("Duplicate transaction detected: " + referenceId);
-                return;
+                return "Duplicate transaction detected!";
             }
-            com.igirepay.lab1.model.Account fromAccount = accountDao.getAccountById(fromAccountId);
-            com.igirepay.lab1.model.Account toAccount = accountDao.getAccountById(toAccountId);
-            if (fromAccount == null || toAccount == null) {
-                System.out.println("One or both accounts not found!");
-                return;
+            Account fromAccount = accountDao.getAccountById(fromAccountId);
+            Account toAccount = accountDao.getAccountById(toAccountId);
+            if (fromAccount == null) {
+                return "Your account not found!";
+            }
+            if (toAccount == null) {
+                return "Recipient account not found!";
+            }
+            if (fromAccount.getCustomerId() != customerId) {
+                return "You can only transfer from your own account!";
+            }
+            if (amount > fromAccount.getBalance()) {
+                return "Insufficient balance!";
             }
             if (fromAccount.getAccountType().equals("SAVINGS")) {
                 double fee = amount * 2 / 100;
                 double totalDeduction = amount + fee;
                 if (totalDeduction > fromAccount.getBalance()) {
-                    System.out.println("Insufficient balance to cover amount and fee!");
-                    return;
+                    return "Insufficient balance to cover amount and fee!";
                 }
                 double newFromBalance = fromAccount.getBalance() - totalDeduction;
                 double newToBalance = toAccount.getBalance() + amount;
@@ -133,8 +137,7 @@ public class TransactionService {
                 Transaction transaction = new Transaction(0, referenceId, amount, "TRANSFER", fromAccountId, LocalDateTime.now().toString());
                 transactionDao.addTransaction(transaction);
                 processedRequestDao.addProcessedRequest(referenceId);
-                System.out.println("Fee charged: " + fee + " RWF");
-                System.out.println("Transfer successful! Your new balance: " + newFromBalance);
+                return "SUCCESS: Money transferred successfully! Fee charged: " + fee + " RWF. New balance: " + newFromBalance + " RWF";
             } else {
                 double newFromBalance = fromAccount.getBalance() - amount;
                 double newToBalance = toAccount.getBalance() + amount;
@@ -143,10 +146,9 @@ public class TransactionService {
                 Transaction transaction = new Transaction(0, referenceId, amount, "TRANSFER", fromAccountId, LocalDateTime.now().toString());
                 transactionDao.addTransaction(transaction);
                 processedRequestDao.addProcessedRequest(referenceId);
-                System.out.println("Transfer successful! Your new balance: " + newFromBalance);
+                return "";
             }
         } catch (SQLException e) {
-            System.out.println("Error during transfer: " + e.getMessage());
             throw e;
         }
     }
