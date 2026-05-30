@@ -1,6 +1,10 @@
 package com.igirepay;
 
+import com.igirepay.lab1.model.Account;
 import com.igirepay.lab1.model.Customer;
+import com.igirepay.lab1.model.Transaction;
+import com.igirepay.lab2.dao.AccountDao;
+import com.igirepay.lab2.dao.TransactionDao;
 import com.igirepay.lab3.service.ReportService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,13 +14,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.sql.SQLException;
+import java.util.List;
 
 public class ReportsController {
 
     @FXML private VBox defaultSection;
     @FXML private VBox summarySection;
     @FXML private VBox exportSection;
-    @FXML private Label summaryLabel;
+    @FXML private Label depositsLabel;
+    @FXML private Label withdrawalsLabel;
+    @FXML private Label transfersLabel;
+    @FXML private Label totalLabel;
     @FXML private Label messageLabel;
     @FXML private TextField exportAccountId;
     @FXML private TextField exportFileName;
@@ -38,6 +46,7 @@ public class ReportsController {
         summarySection.setManaged(false);
         exportSection.setVisible(false);
         exportSection.setManaged(false);
+        messageLabel.setText("");
     }
 
     @FXML
@@ -46,8 +55,28 @@ public class ReportsController {
             hideAllSections();
             summarySection.setVisible(true);
             summarySection.setManaged(true);
-            reportService.viewDailySummary(loggedInCustomer.getId());
-            summaryLabel.setText("Daily summary generated!\nCheck console for details.");
+            List<Account> accounts = new AccountDao().getAccountsByCustomerId(loggedInCustomer.getId());
+            double totalDeposits = 0;
+            double totalWithdrawals = 0;
+            double totalTransfers = 0;
+            for (Account account : accounts) {
+                List<Transaction> transactions = new TransactionDao().getTransactionsByAccountId(account.getId());
+                for (Transaction transaction : transactions) {
+                    if (transaction.getTransactionType().equals("DEPOSIT")) {
+                        totalDeposits += transaction.getAmount();
+                    } else if (transaction.getTransactionType().equals("WITHDRAW")) {
+                        totalWithdrawals += transaction.getAmount();
+                    } else if (transaction.getTransactionType().equals("TRANSFER")) {
+                        totalTransfers += transaction.getAmount();
+                    }
+                }
+            }
+            double total = totalDeposits + totalWithdrawals + totalTransfers;
+            depositsLabel.setText(totalDeposits + " RWF");
+            withdrawalsLabel.setText(totalWithdrawals + " RWF");
+            transfersLabel.setText(totalWithdrawals + " RWF");
+            transfersLabel.setText(totalTransfers + " RWF");
+            totalLabel.setText(total + " RWF");
         } catch (SQLException e) {
             messageLabel.setText("Error: " + e.getMessage());
         }

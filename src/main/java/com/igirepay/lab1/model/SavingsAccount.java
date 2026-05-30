@@ -7,7 +7,7 @@ public class SavingsAccount extends Account {
     private double transactionFee;
 
     public SavingsAccount(int id, int customerId, String accountType, double balance, String createdAt, double interestRate, double withdrawalLimit, double transactionFee) {
-        super(id, customerId, "Savings", balance, createdAt);
+        super(id, customerId, "SAVINGS", balance, createdAt);
         this.interestRate = interestRate;
         this.withdrawalLimit = withdrawalLimit;
         this.transactionFee = transactionFee;
@@ -75,7 +75,7 @@ public class SavingsAccount extends Account {
             System.out.println("Insufficient balance");
             return;
         }
-        setBalance(getBalance() - amount);
+        setBalance(getBalance() - totalDeduction);
         System.out.println("Withdrawn: " + amount);
         System.out.println("fee charged: " + fee);
         System.out.println("Total deducted: " + totalDeduction);

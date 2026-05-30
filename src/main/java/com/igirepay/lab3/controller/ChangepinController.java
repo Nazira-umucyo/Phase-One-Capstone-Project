@@ -25,8 +25,34 @@ public class ChangepinController {
 
     @FXML
     protected void handleChangePin() {
-        String oldPin = oldPinField.getText();
-        String newPin = newPinField.getText();
+        String oldPin = oldPinField.getText().trim();
+        String newPin = newPinField.getText().trim();
+
+        if (oldPin.isEmpty()) {
+            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setText("Old PIN is required!");
+            return;
+        }
+        if (newPin.isEmpty()) {
+            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setText("New PIN is required!");
+            return;
+        }
+        if (newPin.length() != 4) {
+            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setText("New PIN must be exactly 4 digits!");
+            return;
+        }
+        if (!newPin.matches("[0-9]+")) {
+            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setText("PIN must contain numbers only!");
+            return;
+        }
+        if (oldPin.equals(newPin)) {
+            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setText("New PIN must be different from old PIN!");
+            return;
+        }
         try {
             boolean success = authService.changePin(loggedInCustomer, oldPin, newPin);
             if (success) {

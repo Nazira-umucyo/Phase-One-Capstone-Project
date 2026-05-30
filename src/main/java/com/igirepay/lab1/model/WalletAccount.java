@@ -5,7 +5,7 @@ public class WalletAccount extends Account {
     private boolean instantTransfer;
 
     public WalletAccount(int id, int customerId, String accountType, double balance, String createdAt, boolean instantTransfer) {
-        super(id, customerId, "Wallet", balance, createdAt);
+        super(id, customerId, "WALLET", balance, createdAt);
         this.instantTransfer = instantTransfer;
     }
 

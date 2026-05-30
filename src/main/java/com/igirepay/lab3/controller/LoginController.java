@@ -26,17 +26,36 @@ public class LoginController {
 
     @FXML
     protected void handleLogin() {
-        String phone = phoneField.getText();
-        String pin = pinField.getText();
+        String phoneNumber = phoneField.getText().trim();
+        String pin = pinField.getText().trim();
+        if (phoneNumber.isEmpty()) {
+            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setText("Phone number is required!");
+            return;
+        }
+        if (pin.isEmpty()) {
+            messageLabel.setStyle("-fx-text-fill: red;");
+            messageLabel.setText("PIN is required!");
+            return;
+        }
         try {
-            Customer customer = authService.login(phone, pin);
+            Customer customer = authService.login(phoneNumber, pin);
             if (customer != null) {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboard.fxml"));
-                Stage stage = (Stage) phoneField.getScene().getWindow();
-                Scene scene = new Scene(loader.load(), 700, 500);
-                DashboardController controller = loader.getController();
-                controller.setCustomer(customer);
-                stage.setScene(scene);
+                if (customer.getRole().equals("ADMIN")) {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("admindashboard.fxml"));
+                    Stage stage = (Stage) phoneField.getScene().getWindow();
+                    Scene scene = new Scene(loader.load(), 700, 500);
+                    AdminDashboardController controller = loader.getController();
+                    controller.setCustomer(customer);
+                    stage.setScene(scene);
+                } else {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboard.fxml"));
+                    Stage stage = (Stage) phoneField.getScene().getWindow();
+                    Scene scene = new Scene(loader.load(), 700, 500);
+                    DashboardController controller = loader.getController();
+                    controller.setCustomer(customer);
+                    stage.setScene(scene);
+                }
             } else {
                 messageLabel.setStyle("-fx-text-fill: red;");
                 messageLabel.setText("Invalid phone number or PIN!");

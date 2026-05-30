@@ -6,13 +6,15 @@ public class Customer {
     private String email;
     private String phoneNumber;
     private String pin;
+    private String role;
 
-    public Customer(int id, String fullName, String email, String phoneNumber, String pin) {
+    public Customer(int id, String fullName, String email, String phoneNumber, String pin, String role) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.pin = pin;
+        this.role = role;
     }
 
     public int getId() {
@@ -55,6 +57,14 @@ public class Customer {
         this.pin = pin;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "Customer{" +
@@ -63,6 +73,7 @@ public class Customer {
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", pin='" + pin + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }
