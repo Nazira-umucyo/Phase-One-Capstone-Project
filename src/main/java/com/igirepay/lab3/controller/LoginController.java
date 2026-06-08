@@ -42,14 +42,14 @@ public class LoginController {
             Customer customer = authService.login(phoneNumber, pin);
             if (customer != null) {
                 if (customer.getRole().equals("ADMIN")) {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("admindashboard.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/igirepay/admindashboard.fxml"));
                     Stage stage = (Stage) phoneField.getScene().getWindow();
                     Scene scene = new Scene(loader.load(), 700, 500);
                     AdminDashboardController controller = loader.getController();
                     controller.setCustomer(customer);
                     stage.setScene(scene);
                 } else {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboard.fxml"));
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/igirepay/dashboard.fxml"));
                     Stage stage = (Stage) phoneField.getScene().getWindow();
                     Scene scene = new Scene(loader.load(), 700, 500);
                     DashboardController controller = loader.getController();
@@ -72,7 +72,7 @@ public class LoginController {
     @FXML
     protected void handleRegister() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("register.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/igirepay/register.fxml"));
             Stage stage = (Stage) phoneField.getScene().getWindow();
             stage.setScene(new Scene(loader.load(), 700, 500));
         } catch (Exception e) {
