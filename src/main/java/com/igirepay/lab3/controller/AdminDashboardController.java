@@ -425,7 +425,7 @@ public class AdminDashboardController {
     @FXML
     protected void handleLogout() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/igirepay/login.fxml"));
             Stage stage = (Stage) messageLabel.getScene().getWindow();
             stage.setScene(new Scene(loader.load(), 700, 500));
         } catch (Exception e) {
