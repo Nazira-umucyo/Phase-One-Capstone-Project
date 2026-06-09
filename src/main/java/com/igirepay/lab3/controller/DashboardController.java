@@ -24,7 +24,7 @@ public class DashboardController {
     @FXML
     protected void handleCustomerManagement() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("customer.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/igirepay/customer.fxml"));
             Stage stage = (Stage) welcomeText.getScene().getWindow();
             Scene scene = new Scene(loader.load(), 700, 500);
             CustomerController controller = loader.getController();
@@ -38,7 +38,7 @@ public class DashboardController {
     @FXML
     protected void handleAccountManagement() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("account.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/igirepay/account.fxml"));
             Stage stage = (Stage) welcomeText.getScene().getWindow();
             Scene scene = new Scene(loader.load(), 700, 500);
             AccountController controller = loader.getController();
@@ -52,7 +52,7 @@ public class DashboardController {
     @FXML
     protected void handleTransactionManagement() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("transaction.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/igirepay/transaction.fxml"));
             Stage stage = (Stage) welcomeText.getScene().getWindow();
             Scene scene = new Scene(loader.load(), 700, 500);
             TransactionController controller = loader.getController();
@@ -66,7 +66,7 @@ public class DashboardController {
     @FXML
     protected void handleReports() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("reports.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/igirepay/reports.fxml"));
             Stage stage = (Stage) welcomeText.getScene().getWindow();
             Scene scene = new Scene(loader.load(), 700, 500);
             ReportsController controller = loader.getController();
@@ -80,7 +80,7 @@ public class DashboardController {
     @FXML
     protected void handleChangePin() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("changepin.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/igirepay/changepin.fxml"));
             Stage stage = (Stage) welcomeText.getScene().getWindow();
             Scene scene = new Scene(loader.load(), 700, 500);
             ChangepinController controller = loader.getController();
@@ -94,7 +94,7 @@ public class DashboardController {
     @FXML
     protected void handleLogout() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/igirepay/login.fxml"));
             Stage stage = (Stage) welcomeText.getScene().getWindow();
             stage.setScene(new Scene(loader.load(), 700, 500));
         } catch (Exception e) {

@@ -245,7 +245,7 @@ public class AccountController {
     @FXML
     protected void handleBack() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("dashboard.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/igirepay/dashboard.fxml"));
             Stage stage = (Stage) messageLabel.getScene().getWindow();
             Scene scene = new Scene(loader.load(), 700, 500);
             DashboardController controller = loader.getController();
