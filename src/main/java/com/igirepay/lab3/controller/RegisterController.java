@@ -74,7 +74,7 @@ public class RegisterController {
         try {
             Customer customer = new Customer(0, fullName, email, phone, pin, "USER");
             authService.registerCustomer(customer);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/igirepay/login.fxml"));
             Stage stage = (Stage) fullNameField.getScene().getWindow();
             stage.setScene(new Scene(loader.load(), 700, 500));
         } catch (Exception e) {
@@ -86,7 +86,7 @@ public class RegisterController {
     @FXML
     protected void handleBack() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("login.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/igirepay/login.fxml"));
             Stage stage = (Stage) fullNameField.getScene().getWindow();
             stage.setScene(new Scene(loader.load(), 700, 500));
         } catch (Exception e) {
